@@ -11,7 +11,7 @@ void DrawMouse()
 void Click()
 
 {
-        DrawText("CLICK", GetScreenWidth() -90, GetScreenHeight()-25, 20, BLACK);
+        DrawText("Clicked", GetScreenWidth() -90, GetScreenHeight()-25, 20, BLACK);
 }
 
 
@@ -20,18 +20,22 @@ void main()
 
   InitWindow(800, 600, "hello");
 
-  int FPS = 165; SetTargetFPS(FPS);
+  int FPS = 64; SetTargetFPS(FPS);
+
+  char FPSText;
+
+  snprintf(FPSText, sizeof(FPSText), "Target: %d FPS", FPS);
 
   //buttonthingies
   Rectangle buttonthingies = { 300, 250, 200, 100 };
 
-
-
   Rectangle Menu = {20, 20, GetScreenHeight()/2+GetScreenHeight()/4,GetScreenWidth()/2+GetScreenWidth()/5};
-
 
   Rectangle MenuButton = { GetScreenHeight(), 250, 100, 50 };
   bool ShowMenu = false;
+
+  Rectangle textBox = { GetScreenWidth()/2.0f - 100, 180, 225, 50 };
+  bool mouseOnText = false;
 
 
   HideCursor();
@@ -45,7 +49,7 @@ void main()
     DrawText("RAYLIB BASED C BASED LINUX BASED ARCH BASED CACHYOS BASED OPERATING-SYSTEM/LINUXDISTRO", 10, 10, 5, BLACK);
 
     DrawRectangleRec(buttonthingies, RED);
-    Image genImage = GenImageColor(100, 100, RED);
+
 
 
     //Debugging Mouse Button
@@ -54,12 +58,23 @@ void main()
     {
       Click();
     }
+
+
+
+
+
     //Menu
     DrawRectangleRec(MenuButton, GRAY);
     if (CheckCollisionPointRec(GetMousePosition(), MenuButton) && IsMouseButtonPressed(0))
-    {ShowMenu = !ShowMenu;
+    {
+      ShowMenu = !ShowMenu;
+
       Click();
+
+      DrawText(FPSText, GetScreenHeight()/2+GetScreenHeight()/4, GetScreenWidth()/2+GetScreenWidth()/ 5, 5, BLACK);
+
     }
+
 
     if (ShowMenu == true)
     {DrawRectangleRec(Menu, GRAY);};
@@ -70,7 +85,7 @@ void main()
 
 
     EndDrawing();
-    UnloadImage(genImage);
+
   }
 
 
@@ -87,3 +102,6 @@ void main()
 
 
 //              gcc hello.c -o hello -lraylib -lGL -lm -lpthread -ldl -lrt -lX11                    ./hello
+
+//              valgrind --leak-check=full ./hello
+
