@@ -1,0 +1,8 @@
+#!/bin/bash
+
+cd ~/dokumenter/WINDOWSWHATT
+gcc hello.c -o hello -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
+
+./hello
+
+exit
