@@ -18,13 +18,13 @@ void Click()
 void main()
 {
 
-  InitWindow(800, 600, "hello");
+  InitWindow(1600, 1200, "hello");
 
-  int FPS = 64; SetTargetFPS(FPS);
+  int FPS = 60;
 
   char FPSText;
 
-  snprintf(FPSText, sizeof(FPSText), "Target: %d FPS", FPS);
+
 
   //buttonthingies
   Rectangle buttonthingies = { 300, 250, 200, 100 };
@@ -50,7 +50,7 @@ void main()
 
     DrawRectangleRec(buttonthingies, RED);
 
-
+    SetTargetFPS(FPS);
 
     //Debugging Mouse Button
     DrawRectangleRec(buttonthingies, RED);
@@ -61,7 +61,21 @@ void main()
 
 
 
+    if (ShowMenu == true)
+    {
+      DrawRectangleRec(Menu, GRAY);
 
+
+      DrawText(TextFormat("%d",FPS), GetScreenHeight() / 16, GetScreenWidth() / 16, 20, BLACK);
+
+      DrawRectangleRec(MenuButton, GRAY);
+      if (CheckCollisionPointRec(GetMousePosition(), MenuButton) && IsKeyPressed(KEY_DOWN))
+      {
+        FPS=FPS-5;
+
+        if (FPS<1) FPS = 1;
+      }
+    };
 
     //Menu
     DrawRectangleRec(MenuButton, GRAY);
@@ -71,13 +85,10 @@ void main()
 
       Click();
 
-      DrawText(FPSText, GetScreenHeight()/2+GetScreenHeight()/4, GetScreenWidth()/2+GetScreenWidth()/ 5, 5, BLACK);
-
     }
 
 
-    if (ShowMenu == true)
-    {DrawRectangleRec(Menu, GRAY);};
+
 
 
     DrawMouse();
